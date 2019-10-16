@@ -2,10 +2,7 @@ def call() {
     script {
         modifiedFiles = sh(
             returnStdout: true,
-            script: """
-            git diff --name-only \$(git ls-remote origin --tags ${env.CHANGE_BRANCH} | cut -f1) \
-            ${env.GIT_COMMIT}
-            """
+            script: "git diff --name-only \$(git ls-remote origin --tags ${env.CHANGE_TARGET} | cut -f1) ${env.GIT_COMMIT}"
         ).trim().split("\n").findAll { it.endsWith(".yml") }
 
         if ("group.yml" in modifiedFiles || "streams.yml" in modifiedFiles) {
