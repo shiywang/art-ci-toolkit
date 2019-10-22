@@ -1,8 +1,10 @@
+import groovy.json.JsonOutput
 def call(Map stageParams) {
     withCredentials([string(credentialsId: "openshift-bot-token", variable: "GITHUB_TOKEN")]) {
         script {
-            writeFile(file: "msg.txt", text: stageParams.msg)
-            requestBody = sh(returnStdout: true, script: "jq --rawfile msg msg.txt -nr '{\"body\": \$msg}'")
+            requestBody = JsonOutput.toJson([
+                'body': stageParams.msg
+            ])
             repositoryName = env.GIT_URL.replace("https://github.com/", "").replace(".git", "")
 
             httpRequest(
