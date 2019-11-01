@@ -1,5 +1,8 @@
 def call() {
     script {
+        //fetching latest state (HEAD) of CHANGE_TARGET
+        sh "git fetch --no-tags --progress -- ${env.GIT_URL} ${env.CHANGE_TARGET}"
+
         def ignoredFiles = [
             "erratatool.yml",
         ]
