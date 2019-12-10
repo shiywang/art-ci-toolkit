@@ -1,8 +1,16 @@
 FROM centos:8
 
 RUN yum install -y epel-release @python27 @python36
-RUN yum install -y gcc git jq krb5-devel openssl-devel libcurl-devel rpm-devel \
-    python{2,3}-{devel,pip}
+RUN yum install -y \
+  gcc \
+  git \
+  jq \
+  krb5-devel \
+  libcurl-devel \
+  libgit2 \
+  openssl-devel \
+  rpm-devel \
+  python{2,3}-{devel,pip}
 
 # Those environment variables are required to install pycurl, koji, and rpkg with pip
 ENV PYCURL_SSL_LIBRARY=openssl RPM_PY_SYS=true
